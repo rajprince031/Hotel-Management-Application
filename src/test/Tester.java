@@ -1,3 +1,5 @@
+package test;
+
 import model.Customer;
 
 public class Tester {
