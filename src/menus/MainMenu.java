@@ -37,7 +37,7 @@ public class MainMenu {
 
             //Get user choice
             System.out.println("\nPlease choose an option : ");
-            String choice = input.next().trim();
+            String choice = input.nextLine().trim();
 
             //Handle user choice
             switch (choice) {
@@ -111,16 +111,16 @@ public class MainMenu {
                     return;
                 }
                 System.out.println("Enter Email format: name@domain.extension");
-                String email = input.next();
+                String email = input.nextLine();
                 if(!validateCustomer(email)){
                     System.out.println("The email address doesn't exist. Please create a new account.");
                     return;
                 }
-                System.out.println("What room number would you like to reserve");
+                System.out.println("Enter the room number you'd like to reserve:");
                 String roomNumber;
                 boolean isRoomAvailableInList = false;
                  do{
-                    roomNumber = input.next().trim();
+                    roomNumber = input.nextLine().trim();
                     for(IRoom room : availableRooms){
                         if(room.getRoomNumber().equals(roomNumber)){
                             isRoomAvailableInList = true;
@@ -150,7 +150,7 @@ public class MainMenu {
 
     // Take an input as string validate and parse it to the date
     private Date enterDate() {
-        String inputDate = input.next().trim();
+        String inputDate = input.nextLine().trim();
         try {
             final String dateRegex = "^(?:19|20)\\d\\d-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$";
             // If the input doesn't match the expected date format
@@ -167,7 +167,7 @@ public class MainMenu {
     // Get all the reservation of the customer
     private void seeReservations() {
         System.out.println("Enter your email address: ");
-        String email = input.next();
+        String email = input.nextLine();
         if(!validateCustomer(email)){
             System.out.println("The email address doesn't exist.");
             return;
@@ -183,9 +183,9 @@ public class MainMenu {
     //Create a customer account
     private void createAccount() {
         System.out.println("\nEnter First Name:");
-        String firstName = input.next().trim();
+        String firstName = input.nextLine().trim();
         System.out.println("Enter Last Name:");
-        String lastName = input.next().trim();
+        String lastName = input.nextLine().trim();
         System.out.println("Enter Email:");
         String email = validateEmail();
         if(validateCustomer(email)){
@@ -203,7 +203,7 @@ public class MainMenu {
     // validate email
     private String validateEmail(){
         final String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
-        String email = input.next().trim().toLowerCase();
+        String email = input.nextLine().trim().toLowerCase();
         if(email.matches(emailRegex)){
             return email;
         }
@@ -223,7 +223,7 @@ public class MainMenu {
 
     // Confirmation method to get user response
     private boolean confirmationMethod(){
-        String response = input.next().trim().toLowerCase();
+        String response = input.nextLine().trim().toLowerCase();
         if(response.equals("y")){
             return true;
         }

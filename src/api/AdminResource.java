@@ -29,6 +29,11 @@ public class AdminResource {
         reservationService.addRoom(rooms);
     }
 
+    // Check if room is present or not
+    public boolean isRoomExists(String roomNumber){
+        return reservationService.isRoomExists(roomNumber);
+    }
+
     // get a room by room number
     public IRoom getARoom(String roomNumber){
         return reservationService.getARoom(roomNumber);

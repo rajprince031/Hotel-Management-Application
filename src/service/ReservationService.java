@@ -123,4 +123,10 @@ public class ReservationService {
             System.out.println("Error during printing the reservations: "+exception.getMessage());
         }
     }
+
+
+    //check if the room is present or not
+    public boolean isRoomExists(String roomNumber) {
+        return roomList.containsKey(roomNumber);
+    }
 }

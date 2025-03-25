@@ -32,7 +32,7 @@ public class AdminMenu {
 
             //Get user choice
             System.out.println("\nPlease choose an option : ");
-            String choice = input.next().trim();
+            String choice = input.nextLine().trim();
 
             //Handle user choice
             switch (choice) {
@@ -77,29 +77,38 @@ public class AdminMenu {
         adminResource.displayAllReservations();
     }
 
+    private boolean roomValidation(String roomNumber){
+        return adminResource.isRoomExists(roomNumber);
+    }
     private void addARoom() {
         List<IRoom> addRooms = new ArrayList<>();
         while(true) {
             System.out.println("\nEnter room number");
-            String roomNumber = input.next().trim().toUpperCase();
-            System.out.println("Enter price per night");
-            double price = isPriceValid();
-            RoomType roomType;
-            System.out.println("Enter room type: 1 for single bed or 2 for double bed");
-            while(true){
-                String chooseBed = input.next().trim();
-                if (chooseBed.equals("1")) {
-                    roomType = RoomType.SINGLE;
-                    break;
-                } else if(chooseBed.equals("2")) {
-                    roomType = RoomType.DOUBLE;
-                    break;
-                }else{
-                    System.out.println("Invalid option, choose 1 for single bed or 2 for double bed");
+            String roomNumber = input.nextLine().trim().toUpperCase();
+            boolean isRoomInTheList = addRooms.stream().anyMatch(room -> room.getRoomNumber().equals(roomNumber));
+            if(roomValidation(roomNumber) || isRoomInTheList){
+                System.out.println("This room number already exists.");
+            }else {
+                System.out.println("Enter price per night");
+                double price = isPriceValid();
+                RoomType roomType;
+                System.out.println("Enter room type: 1 for single bed or 2 for double bed");
+                while (true) {
+                    String chooseBed = input.nextLine().trim();
+                    if (chooseBed.equals("1")) {
+                        roomType = RoomType.SINGLE;
+                        break;
+                    } else if (chooseBed.equals("2")) {
+                        roomType = RoomType.DOUBLE;
+                        break;
+                    } else {
+                        System.out.println("Invalid option, choose 1 for single bed or 2 for double bed");
+                    }
                 }
+
+                Room room = new Room(roomNumber, price, roomType);
+                addRooms.add(room);
             }
-            Room room = new Room(roomNumber, price, roomType);
-            addRooms.add(room);
 
             System.out.println("Would you like to add another room y/n");
             boolean response = confirmationMethod();
@@ -110,7 +119,7 @@ public class AdminMenu {
 
     // Confirmation method to get user response
     private boolean confirmationMethod(){
-        String response = input.next().trim().toLowerCase();
+        String response = input.nextLine().trim().toLowerCase();
         if(response.equals("y")){
             return true;
         }
@@ -127,7 +136,7 @@ public class AdminMenu {
 
     private double isPriceValid(){
             try {
-                String priceInString =  input.next().trim();
+                String priceInString =  input.nextLine().trim();
                 double price = Double.parseDouble(priceInString);
                 if(price < 0) throw new IllegalArgumentException();
                 return price;
