@@ -4,34 +4,48 @@ import model.Customer;
 import model.IRoom;
 import service.CustomerService;
 import service.ReservationService;
-import service.RoomService;
 
 import java.util.Collection;
 import java.util.List;
 
 public class AdminResource {
+
+    private static final AdminResource instance = new AdminResource();
+    private AdminResource() {}
+    public static AdminResource getInstance() {
+        return instance;
+    }
+
+    private final static CustomerService customerService = CustomerService.getInstance();
+    private final static ReservationService reservationService = ReservationService.getInstance();
+
     //get customer
-    public static Customer getCustomer(String email){
-        return CustomerService.getCustomer(email);
+    public Customer getCustomer(String email){
+        return customerService.getCustomer(email);
     }
 
     // add room
-    public static void addRoom(List<IRoom> rooms){
-        RoomService.addRoom(rooms);
+    public void addRoom(List<IRoom> rooms){
+        reservationService.addRoom(rooms);
+    }
+
+    // get a room by room number
+    public IRoom getARoom(String roomNumber){
+        return reservationService.getARoom(roomNumber);
     }
 
     // get all room
-    public static Collection<IRoom> getAllRooms(){
-        return RoomService.getAllRooms();
+    public Collection<IRoom> getAllRooms(){
+        return reservationService.getAllRooms();
     }
 
     //get all customer
-    public static Collection<Customer> getAllCustomers(){
-        return CustomerService.getAllCustomers();
+    public Collection<Customer> getAllCustomers(){
+        return customerService.getAllCustomers();
     }
 
     //display all reservations
-    public static void displayAllReservations(){
-        ReservationService.printAllReservation();
+    public void displayAllReservations(){
+        reservationService.printAllReservation();
     }
 }
